@@ -3,7 +3,7 @@
 // @namespace      https://github.com/muescha/SpiegelDeFotostrecke
 // @description    Zeigt die Fotostrecke auf einer Seite an.
 // @include        http://www.spiegel.de/fotostrecke/*
-// @version        2012-05-26
+// @version        1.0
 // ==/UserScript==
 
 window.spiegelDeFotostrecke = {
