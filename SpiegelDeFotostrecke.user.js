@@ -3,7 +3,7 @@
 // @namespace      https://github.com/muescha/SpiegelDeFotostrecke
 // @description    Zeigt die Fotostrecke auf einer Seite an.
 // @include        http://www.spiegel.de/fotostrecke/*
-// @version        1.0
+// @version        1.1
 // ==/UserScript==
 
 window.spiegelDeFotostrecke = {
@@ -25,15 +25,13 @@ window.spiegelDeFotostrecke = {
     },
 
     getImage:function (imageId, url) {
-
-        var request = new XMLHttpRequest();
-        request.open('GET', url, true);
-        request.onreadystatechange = function () {
-            if (this.readyState == this.DONE) {
-                spiegelDeFotostrecke.extractImage(imageId, this.responseText);
-            }
-        };
-        request.send('');
+        GM_xmlhttpRequest({
+          method: "GET",
+          url: url,
+          onload: function(response) {
+              spiegelDeFotostrecke.extractImage(imageId, response.responseText);
+          }
+        });
     },
 
     extractImage:function (imageId, html) {
