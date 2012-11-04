@@ -3,7 +3,7 @@
 // @namespace      https://github.com/muescha/SpiegelDeFotostrecke
 // @description    Zeigt die Fotostrecke auf einer Seite an.
 // @include        http://www.spiegel.de/fotostrecke/*
-// @version        1.1
+// @version        1.2
 // ==/UserScript==
 
 window.spiegelDeFotostrecke = {
@@ -77,7 +77,7 @@ window.spiegelDeFotostrecke = {
 
         if (pageInfo.currentPage == 1) {
 
-            for (var imageId = 2; imageId < pageInfo.maxPages + 1; imageId++) {
+            for (var imageId = 2; imageId < pageInfo.maxPages + 2; imageId++) {
 
                 var div = document.createElement('div');
                 div.id = spiegelDeFotostrecke.genImageId(imageId);
