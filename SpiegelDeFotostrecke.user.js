@@ -3,7 +3,7 @@
 // @namespace      https://github.com/muescha/SpiegelDeFotostrecke
 // @description    Zeigt die Fotostrecke auf einer Seite an.
 // @include        http://www.spiegel.de/fotostrecke/*
-// @version        1.2
+// @version        1.3
 // ==/UserScript==
 
 window.spiegelDeFotostrecke = {
@@ -36,8 +36,10 @@ window.spiegelDeFotostrecke = {
 
     extractImage:function (imageId, html) {
 
-        var htmlImage = html.replace(/(\r|\n)/g, '').replace(/^.+<div id="spBigaBild" style="width:\d*px;">(.+?)<\/div>.+/, '$1');
-        var htmlDescription = html.replace(/(\r|\n)/g, '').replace(/^.+<div id="spBigaBildunterschrift">(.+?)<\/div>.+/, '$1');
+        var htmlImage       = html.replace(/(\r|\n)/g, '').replace(/^.+<div class="biga-image" style="width:\d*px;">(.+?)<\/div>.+/, '$1');
+
+        // Ziemlich unscharfer Selektor, aber es scheint tatsächlich nur ein <p> im Dokument zu geben
+        var htmlDescription = html.replace(/(\r|\n)/g, '').replace(/^.+<p>(.+?)<\/p>.+/, '$1');
 
         var divImage = document.createElement('div');
         divImage.innerHTML = htmlImage;
@@ -45,34 +47,28 @@ window.spiegelDeFotostrecke = {
 
         var div = document.getElementById(spiegelDeFotostrecke.genImageId(imageId));
         div.style.textAlign = "center";
-        div.innerHTML = "<p>Nr.: " + imageId + "</p>" + htmlDescription;
+        div.style.marginTop = "50px";
+        div.innerHTML = "<p><strong>Nr. " + imageId + "</strong></p>" + htmlDescription;
         div.insertBefore(image, div.getElementsByTagName("p")[0]);
 
     },
 
     getPageInfo:function () {
-
-        var insertBeforeElement = spiegelDeFotostrecke.getElementByClassName(document, "spBigaNavi spLast")[0];
-
-        var vonBisText = spiegelDeFotostrecke.getElementByClassName(document, "spBigaControl")[0].textContent;
-
-        vonBisText = vonBisText.replace(/(\r|\n|\s)/g, '');
-
-        var currentPage = vonBisText.replace(/(\d*)von(.\d*)/, '$1') - 0;
-        var maxPages = vonBisText.replace(/(\d*)von(.\d*)/, '$2') - 1;
-
-        var url = document.location.href;
+        var insertBeforeElement = document.getElementsByClassName("biga-nav-after")[0];
+        var vonBisText          = document.getElementsByClassName("biga-control")[0].textContent.replace(/(\r|\n|\s)/g, '');
+        var currentPage         = vonBisText.replace(/(\d*)von(.\d*)/, '$1') - 0;
+        var maxPages            = vonBisText.replace(/(\d*)von(.\d*)/, '$2') - 1;
+        var url                 = document.location.href;
 
         return {
-            insertBeforeElement:insertBeforeElement,
-            currentPage:currentPage,
-            maxPages:maxPages,
-            url:url
+            insertBeforeElement : insertBeforeElement,
+            currentPage         : currentPage,
+            maxPages            : maxPages,
+            url                 : url
         };
     },
 
     init:function () {
-
         var pageInfo = spiegelDeFotostrecke.getPageInfo();
 
         if (pageInfo.currentPage == 1) {
