@@ -8,18 +8,6 @@
 
 window.spiegelDeFotostrecke = {
 
-    getElementByClassName:function (node, className, tagName) {
-        tagName = tagName || 'div';
-        var divs = node.getElementsByTagName(tagName);
-        var nodes = new Array();
-        for (var i = 0, j = 0; i < divs.length; i++) {
-            if (divs[i].className == className) {
-                nodes[j++] = divs[i];
-            }
-        }
-        return nodes;
-    },
-
     genImageId:function (imageId) {
         return "image" + imageId;
     },
