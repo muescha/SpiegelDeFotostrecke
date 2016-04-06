@@ -4,7 +4,7 @@
 // @description    Zeigt die Fotostrecke auf einer Seite an.
 // @include        http://www.spiegel.de/fotostrecke/*
 // @grant          GM_xmlhttpRequest
-// @version        1.3.1
+// @version        1.3.2
 // ==/UserScript==
 
 window.spiegelDeFotostrecke = {
