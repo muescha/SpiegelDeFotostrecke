@@ -28,7 +28,7 @@ window.spiegelDeFotostrecke = {
         var htmlImage       = html.replace(/(\r|\n)/g, '').replace(/^.+<div class="biga-image" style="width:\d*px;">(.+?)<\/div>.+/, '$1');
 
         // Ziemlich unscharfer Selektor, aber es scheint tatsächlich nur ein <p> im Dokument zu geben
-        var htmlDescription = html.replace(/(\r|\n)/g, '').replace(/^.+biga-image.*<\/div>(.+?)<div.*biga-nav.+/, '$1');
+        var htmlDescription = html.replace(/(\r|\n)/g, '').replace(/^.+biga-image.*<p>(.+?)<\/p.+/, '$1');
 
         var divImage = document.createElement('div');
         divImage.innerHTML = htmlImage;
@@ -45,8 +45,8 @@ window.spiegelDeFotostrecke = {
     getPageInfo:function () {
         var insertBeforeElement = document.getElementsByClassName("biga-nav-after")[0];
         var vonBisText          = document.getElementsByClassName("biga-control")[0].textContent.replace(/(\r|\n|\s)/g, '');
-        var currentPage         = vonBisText.replace(/(\d*)von(.\d*)/, '$1') - 0;
-        var maxPages            = vonBisText.replace(/(\d*)von(.\d*)/, '$2') - 1;
+        var currentPage         = vonBisText.replace(/(\d*)\/(.\d*)/, '$1') - 0;
+        var maxPages            = vonBisText.replace(/(\d*)\/(.\d*)/, '$2') - 1;
         var url                 = document.location.href;
 
         return {
